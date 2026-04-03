@@ -1,12 +1,20 @@
 import { ProfileUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../services/user/slice';
+import { useDispatch } from '../../services/store';
+import { updateUserInfo } from '../../services/user/actions';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectUser);
+  const user = useMemo(
+    () => ({
+      name: userInfo?.name || '',
+      email: userInfo?.email || ''
+    }),
+    [userInfo?.name, userInfo?.email]
+  );
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -17,18 +25,19 @@ export const Profile: FC = () => {
   useEffect(() => {
     setFormValue((prevState) => ({
       ...prevState,
-      name: user?.name || '',
-      email: user?.email || ''
+      name: user.name || '',
+      email: user.email || ''
     }));
   }, [user]);
 
   const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
+    formValue.name !== user.name ||
+    formValue.email !== user.email ||
     !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(updateUserInfo(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
@@ -56,6 +65,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

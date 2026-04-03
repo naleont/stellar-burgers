@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { login, logout } from './actions';
-import { TLoginData } from '@api';
 
 type TUserState = {
   user: TUser | null;
@@ -39,7 +38,6 @@ export const userSlice = createSlice({
       })
       .addCase(login.rejected, (state) => {
         state.error = null;
-        // state.error = ???;
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<TUser>) => {
         state.user = action.payload;

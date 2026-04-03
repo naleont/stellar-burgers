@@ -5,9 +5,10 @@ import {
   logoutApi,
   registerUserApi,
   TLoginData,
-  TRegisterData
+  TRegisterData,
+  updateUserApi
 } from '@api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userActions } from './slice';
 
 export const login = createAsyncThunk('user/login', async (data: TLoginData) =>
@@ -41,10 +42,11 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// const f = (dispatch, store) => {
-//   dispatch({ type: 'user/login/pending'})
-// };
-
-// gc.then(dispatch({ type: 'user/login/fulfilled', payload: x })).catch(...);
-
-// все проверки и логика только в функциях api\
+export const updateUserInfo = createAsyncThunk(
+  'user/update',
+  async (userData: Partial<TRegisterData>, { dispatch }) => {
+    updateUserApi(userData).then((data) => {
+      dispatch(userActions.setUser(data.user));
+    });
+  }
+);

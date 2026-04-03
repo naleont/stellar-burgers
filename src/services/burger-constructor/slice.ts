@@ -6,15 +6,15 @@ type TConstructorState = {
   loading: boolean;
   error: string | undefined;
   orderRequested: boolean;
-  orderNumber?: number;
-  postedOrder?: TOrder;
+  currentOrder: TOrder | null;
 };
 
 const initialState: TConstructorState = {
   selectedIngredients: [],
   loading: false,
   error: undefined,
-  orderRequested: false
+  orderRequested: false,
+  currentOrder: null
 };
 
 export const constructorSlice = createSlice({
@@ -31,9 +31,11 @@ export const constructorSlice = createSlice({
         state.selectedIngredients.push(action.payload);
       }
     },
-    // rewriteBuger: (state, action: PayloadAction<TIngredient[]>) => {
-    //   state.selected = action.payload;
-    // }
+    removeIngredient: (state, action: PayloadAction<number>) => {
+      state.selectedIngredients = state.selectedIngredients.filter(
+        (_, index) => index !== action.payload
+      );
+    },
     moveDown: (state, action: PayloadAction<number>) => {
       const ingredientToMove = state.selectedIngredients[action.payload + 1];
       const neighbour = state.selectedIngredients[action.payload + 2];
@@ -54,22 +56,18 @@ export const constructorSlice = createSlice({
     clearSelected: (state) => {
       state.selectedIngredients = [];
     },
-    setOrderNumber: (state, action: PayloadAction<number>) => {
-      state.orderNumber = action.payload;
-    },
-    setPostedOrder: (state, action: PayloadAction<TOrder>) => {
-      state.postedOrder = action.payload;
+    setCurrentOrder: (state, action: PayloadAction<TOrder | null>) => {
+      state.currentOrder = action.payload;
     }
   },
   selectors: {
     selectedIngredients: (state) => state.selectedIngredients,
     requestOrderState: (state) => state.orderRequested,
-    orederNumber: (state) => state.orderNumber,
-    postedOrder: (state) => state.postedOrder
+    currentOrder: (state) => state.currentOrder
   }
 });
 
-export const { selectedIngredients, requestOrderState, orederNumber } =
+export const { selectedIngredients, requestOrderState, currentOrder } =
   constructorSlice.selectors;
 export const constructorActions = constructorSlice.actions;
 export const reducer = constructorSlice.reducer;

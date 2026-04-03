@@ -1,5 +1,5 @@
-import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient, TOrder } from '@utils-types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils-types';
 import { getIngredients } from './actions';
 
 type TBurgerState = {

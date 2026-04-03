@@ -16,11 +16,6 @@ export const Register: FC = () => {
     dispatch(
       registerUser({ email: email, name: userName, password: password })
     );
-    // dispatch(checkUserAuth());
-    // const user = useSelector((state) => state.user);
-    // if (user) {
-    //   navigate(location);
-    // }
   };
 
   return (

@@ -26,6 +26,7 @@ import { order } from '../../services/order/slice';
 import { useDispatch } from '../../services/store';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 import { checkUserAuth } from '../../services/user/actions';
+import { selectUser } from '../../services/user/slice';
 
 const App = () => {
   const isIngredientsListLoading = useSelector(isIngredientsLoading);
@@ -45,9 +46,11 @@ const App = () => {
 
   const currentOrder = useSelector(order)?.number;
 
+  const userInfo = useSelector(selectUser);
+
   return (
     <div className={styles.app}>
-      <AppHeader />
+      <AppHeader userName={userInfo?.name || undefined} />
 
       <Routes location={background || location}>
         <Route

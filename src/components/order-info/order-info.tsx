@@ -16,7 +16,6 @@ export const OrderInfo: FC = () => {
   const dispatch = useDispatch();
   dispatch(orderActions.selectOrder(orderId));
   const orderData = useSelector(order);
-  console.log(orderData);
   if (!orderData) {
     return <Preloader />;
   }

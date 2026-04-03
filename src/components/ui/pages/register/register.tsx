@@ -7,8 +7,6 @@ import {
 import styles from '../common.module.css';
 import { Link } from 'react-router-dom';
 import { RegisterUIProps } from './type';
-import { useDispatch } from '../../../../services/store';
-import { registerUser } from '../../../../services/user/actions';
 
 export const RegisterUI: FC<RegisterUIProps> = ({
   errorText,

@@ -171,7 +171,11 @@ export const registerUserApi = (data: TRegisterData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
+      if (data?.success) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        return data.user;
+      }
       return Promise.reject(data);
     });
 
@@ -190,7 +194,13 @@ export const loginUserApi = (data: TLoginData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
+      if (data?.success) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        return data.user;
+      }
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('accessToken');
       return Promise.reject(data);
     });
 
@@ -251,3 +261,5 @@ export const logoutApi = () =>
       token: localStorage.getItem('refreshToken')
     })
   }).then((res) => checkResponse<TServerResponse<{}>>(res));
+
+export const isTokenExists = () => localStorage.getItem('accessToken') !== null;

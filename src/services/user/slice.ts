@@ -27,34 +27,39 @@ export const userSlice = createSlice({
     }
   },
   selectors: {
-    user: (state) => state.user,
-    isAuthChecked: (state) => state.isAuthChecked,
-    error: (state) => state.error
+    selectUser: (state) => state.user,
+    selectIsAuthChecked: (state) => state.isAuthChecked,
+    selectError: (state) => state.error
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
         state.error = null;
+        state.isAuthChecked = false;
       })
       .addCase(login.rejected, (state) => {
         state.error = null;
+        // state.error = ???;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<TLoginData>) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<TUser>) => {
         state.user = action.payload;
         state.isAuthChecked = true;
       })
       .addCase(logout.pending, (state) => {
         state.error = null;
+        state.isAuthChecked = false;
       })
       .addCase(logout.rejected, (state) => {
         state.error = null;
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
+        state.isAuthChecked = true;
       });
   }
 });
 
-export const { user, isAuthChecked, error } = userSlice.selectors;
+export const { selectUser, selectIsAuthChecked, selectError } =
+  userSlice.selectors;
 export const userActions = userSlice.actions;
 export const reducer = userSlice.reducer;

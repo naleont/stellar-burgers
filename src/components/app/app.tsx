@@ -14,8 +14,7 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Preloader } from '@ui';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { getIngredients } from '../../services/ingredients/actions';
 import {
@@ -23,7 +22,7 @@ import {
   isIngredientsLoading
 } from '../../services/ingredients/slice';
 import { order } from '../../services/order/slice';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { ProtectedRoute } from '../protected-route/ProtectedRoute';
 import { checkUserAuth } from '../../services/user/actions';
 import { selectUser } from '../../services/user/slice';

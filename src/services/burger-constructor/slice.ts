@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient, TOrder } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { addIngredient } from './actions';
 
 type TConstructorState = {
-  selectedIngredients: TIngredient[];
+  selectedIngredients: TConstructorIngredient[];
   loading: boolean;
   error: string | undefined;
   orderRequested: boolean;
@@ -21,19 +22,9 @@ export const constructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      if (action.payload.type === 'bun') {
-        state.selectedIngredients = state.selectedIngredients.filter(
-          (element) => element.type !== 'bun'
-        );
-        state.selectedIngredients.push(action.payload);
-      } else {
-        state.selectedIngredients.push(action.payload);
-      }
-    },
-    removeIngredient: (state, action: PayloadAction<number>) => {
+    removeIngredient: (state, action: PayloadAction<string>) => {
       state.selectedIngredients = state.selectedIngredients.filter(
-        (_, index) => index !== action.payload
+        (item) => item.id !== action.payload
       );
     },
     moveDown: (state, action: PayloadAction<number>) => {
@@ -64,6 +55,21 @@ export const constructorSlice = createSlice({
     selectedIngredients: (state) => state.selectedIngredients,
     requestOrderState: (state) => state.orderRequested,
     currentOrder: (state) => state.currentOrder
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      addIngredient,
+      (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.selectedIngredients = state.selectedIngredients.filter(
+            (element) => element.type !== 'bun'
+          );
+          state.selectedIngredients.push(action.payload);
+        } else {
+          state.selectedIngredients.push(action.payload);
+        }
+      }
+    );
   }
 });
 

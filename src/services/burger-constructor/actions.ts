@@ -1,7 +1,21 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { orderBurgerApi } from '../../utils/burger-api';
 import { constructorActions } from './slice';
 import { getFeeds } from '../order/actions';
+import { TIngredient } from '../../utils/types';
+import { v4 as uuidv4 } from 'uuid';
+
+export const addIngredient = createAction(
+  'ingredients/add',
+  function prepare(item: TIngredient) {
+    return {
+      payload: {
+        ...item,
+        id: uuidv4()
+      }
+    };
+  }
+);
 
 export const postOrder = createAsyncThunk(
   'order/post',

@@ -16,9 +16,7 @@ export const IngredientDetails: FC = () => {
     return <Preloader />;
   }
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(burgerActions.selectIngredient(ingredientId));
-  }, [ingredientId]);
+  dispatch(burgerActions.selectIngredient(ingredientId));
   const ingredientData = useSelector(currentIngredient);
 
   if (!ingredientData) {

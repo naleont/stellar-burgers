@@ -21,11 +21,14 @@ export const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, { dispatch }) => {
     if (isTokenExists()) {
-      getUserApi()
-        .then((user) => {
-          dispatch(userActions.setUser(user));
-        })
-        .finally(() => userActions.setIsAuthChecked(true));
+      try {
+        const user = await getUserApi();
+        dispatch(userActions.setUser(user.user));
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      } finally {
+        dispatch(userActions.setIsAuthChecked(true));
+      }
     } else {
       dispatch(userActions.setIsAuthChecked(true));
       dispatch(userActions.setUser(null));

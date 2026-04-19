@@ -7,13 +7,35 @@ import { feeds } from '../../services/order/slice';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
+  const orders = useSelector(feeds);
+  const loading = useSelector((state) => state.order.loading);
+  const error = useSelector((state) => state.order.error);
   useEffect(() => {
     dispatch(getFeeds());
   }, []);
-  const orders = useSelector(feeds);
+
+  const handleGetFeeds = () => {
+    dispatch(getFeeds());
+  };
+
+  if (loading) {
+    return <Preloader />;
+  }
+
+  if (error) {
+    return <div>Ошибка загрузки ленты заказов: {error}</div>;
+  }
 
   if (!orders.length) {
     return <Preloader />;
   }
-  return <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+
+  return (
+    <FeedUI
+      orders={orders}
+      handleGetFeeds={() => {
+        handleGetFeeds;
+      }}
+    />
+  );
 };

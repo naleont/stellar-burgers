@@ -14,7 +14,7 @@ const rootReducer = combineSlices(
   constructorSlice,
   orderSlice,
   userSlice
-); 
+);
 
 const store = configureStore({
   reducer: rootReducer,

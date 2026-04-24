@@ -242,7 +242,6 @@ type TUserResponse = TServerResponse<{ user: TUser }>;
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     headers: {
-      // authorization: getCookie('accessToken')
       authorization: localStorage.getItem('accessToken')
     } as HeadersInit
   });

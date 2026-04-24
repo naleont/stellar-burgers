@@ -28,18 +28,32 @@ export const constructorSlice = createSlice({
       );
     },
     moveDown: (state, action: PayloadAction<number>) => {
-      const ingredientToMove = state.selectedIngredients[action.payload + 1];
-      const neighbour = state.selectedIngredients[action.payload + 2];
-      state.selectedIngredients = state.selectedIngredients
-        .with(action.payload + 1, neighbour)
-        .with(action.payload + 2, ingredientToMove);
+      const selectedBun = state.selectedIngredients.find(
+        (element) => element.type === 'bun'
+      );
+      const selectedFilling = state.selectedIngredients.filter(
+        (element) => element.type !== 'bun'
+      );
+      const ingredientToMove = state.selectedIngredients[action.payload];
+      const neighbour = selectedFilling[action.payload + 1];
+      state.selectedIngredients = selectedFilling
+        .with(action.payload, neighbour)
+        .with(action.payload + 1, ingredientToMove);
+      selectedBun && state.selectedIngredients.push(selectedBun);
     },
     moveUp: (state, action: PayloadAction<number>) => {
-      const ingredientToMove = state.selectedIngredients[action.payload + 1];
-      const neighbour = state.selectedIngredients[action.payload];
-      state.selectedIngredients = state.selectedIngredients
-        .with(action.payload + 1, neighbour)
-        .with(action.payload, ingredientToMove);
+      const selectedBun = state.selectedIngredients.find(
+        (element) => element.type === 'bun'
+      );
+      const selectedFilling = state.selectedIngredients.filter(
+        (element) => element.type !== 'bun'
+      );
+      const ingredientToMove = state.selectedIngredients[action.payload];
+      const neighbour = selectedFilling[action.payload - 1];
+      state.selectedIngredients = selectedFilling
+        .with(action.payload, neighbour)
+        .with(action.payload - 1, ingredientToMove);
+      selectedBun && state.selectedIngredients.push(selectedBun);
     },
     requestToggle: (state, action: PayloadAction<boolean>) => {
       state.orderRequested = action.payload;

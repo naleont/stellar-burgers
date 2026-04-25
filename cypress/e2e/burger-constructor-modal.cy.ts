@@ -9,6 +9,7 @@ describe('Модальное окно', () => {
     cy.contains('Краторная булка N-200i').click();
     cy.get('[data-testid="modal"]').should('be.visible');
     cy.contains('Детали ингредиента').should('be.visible');
+    cy.get('[data-testid="modal"]').should('contain', 'Краторная булка N-200i');
   });
 
   it('тест на закрытие по клику на крестик', () => {

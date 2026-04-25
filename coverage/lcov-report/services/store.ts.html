@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for services/burger-constructor/actions.ts</title>
+    <title>Code coverage report for services/store.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">services/burger-constructor</a> actions.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">services</a> store.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/30</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/30</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,7 +93,8 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -115,44 +116,46 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { orderBurgerApi } from '../../utils/burger-api';
-import { constructorActions } from './slice';
-import { getFeeds } from '../order/actions';
-import { TIngredient } from '../../utils/types';
-import { v4 as uuidv4 } from 'uuid';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { combineSlices, configureStore } from '@reduxjs/toolkit';
 &nbsp;
-export const addIngredient = createAction(
-  'ingredients/add',
-  function prepare(item: TIngredient) {
-    return {
-      payload: {
-        ...item,
-        id: uuidv4()
-      }
-    };
-  }
+import {
+  useDispatch as dispatchHook,
+  useSelector as selectorHook
+} from 'react-redux';
+import { burgerSlice } from './ingredients/slice';
+import { constructorSlice } from './burger-constructor/slice';
+import { orderSlice } from './order/slice';
+import { userSlice } from './user/slice';
+&nbsp;
+export const rootReducer = combineSlices(
+  burgerSlice,
+  constructorSlice,
+  orderSlice,
+  userSlice
 );
 &nbsp;
-export const postOrder = createAsyncThunk(
-  'order/post',
-  async (ingredients: string[], { dispatch }) =&gt; {
-<span class="cstat-no" title="statement not covered" >    orderBurgerApi(ingredients).then((orderResponse) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      dispatch(constructorActions.clearSelected());</span>
-<span class="cstat-no" title="statement not covered" >      dispatch(constructorActions.setCurrentOrder(orderResponse.order));</span>
-<span class="cstat-no" title="statement not covered" >      dispatch(constructorActions.requestToggle(false));</span>
-<span class="cstat-no" title="statement not covered" >      dispatch(getFeeds());</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-);
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production'
+});
+&nbsp;
+export type RootState = ReturnType&lt;typeof rootReducer&gt;;
+&nbsp;
+export type AppDispatch = typeof store.dispatch;
+&nbsp;
+export const useDispatch = dispatchHook.withTypes&lt;AppDispatch&gt;();
+export const useSelector = selectorHook.withTypes&lt;RootState&gt;();
+&nbsp;
+export default store;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -162,14 +165,14 @@ export const postOrder = createAsyncThunk(
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2026-04-25T07:46:57.004Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

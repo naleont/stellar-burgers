@@ -29,7 +29,6 @@ export const OrderInfo: FC = () => {
     );
   }, [orderData, ingredients]);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !orderIngredients.length) return null;
 

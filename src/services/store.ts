@@ -9,12 +9,12 @@ import { constructorSlice } from './burger-constructor/slice';
 import { orderSlice } from './order/slice';
 import { userSlice } from './user/slice';
 
-const rootReducer = combineSlices(
+export const rootReducer = combineSlices(
   burgerSlice,
   constructorSlice,
   orderSlice,
   userSlice
-); 
+);
 
 const store = configureStore({
   reducer: rootReducer,

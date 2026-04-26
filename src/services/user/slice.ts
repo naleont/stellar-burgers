@@ -27,8 +27,7 @@ export const userSlice = createSlice({
   },
   selectors: {
     selectUser: (state) => state.user,
-    selectIsAuthChecked: (state) => state.isAuthChecked,
-    selectError: (state) => state.error
+    selectIsAuthChecked: (state) => state.isAuthChecked
   },
   extraReducers: (builder) => {
     builder
@@ -57,7 +56,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { selectUser, selectIsAuthChecked, selectError } =
-  userSlice.selectors;
+export const { selectUser, selectIsAuthChecked } = userSlice.selectors;
 export const userActions = userSlice.actions;
 export const reducer = userSlice.reducer;
